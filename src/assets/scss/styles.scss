@@ -1,0 +1,60 @@
+// css globals and resets
+* {
+	font-family: 'Arial', serif;
+	font-weight: normal;
+  //   color:
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	line-height: 1;
+	font-style: normal;
+	text-decoration: none;
+	list-style-type: none;
+	outline: 0 none transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	&:focus {
+	  outline: 0 none transparent;
+	}
+	&::-moz-focus-inner {
+	border: 0;
+	}
+  }
+  
+  u {
+	  text-decoration: underline;
+  }
+
+// .rotateIn {
+//     animation: rotateInFrames 6s infinite;
+// 	animation-direction: alternate-reverse;}
+
+// @keyframes rotateInFrames {
+//     from {
+//         transform: rotate(-50deg) scale(1, 1);
+//     }
+//     to {
+//         transform: rotate(1440deg) scale(0, 0);
+//     }
+// }
+
+// .rotateOut {
+// 	color: blue;
+//     position: absolute;
+// 	top: 56px;
+//     animation: rotateOutFrames 6s infinite;
+// 	animation-direction: alternate-reverse;
+// }
+
+// @keyframes rotateOutFrames {
+//     from {
+//         transform: rotate(0deg) scale(0, 0);
+//     }
+
+//     to {
+//         transform: rotate(1440deg) scale(1, 1);
+//     }
+// }
+
+
