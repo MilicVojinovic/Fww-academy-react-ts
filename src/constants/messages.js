@@ -13,14 +13,13 @@ export const ERROR_CODES = {
 	ERR_BAD_SESSION_ID: 'Pogrešan session ID',
 	ERR_MISSING_SESSION_ID: 'Nedostaje session ID',
 	SESSION_NOT_VALID: 'Sesija nije validna',
-	ERR_NO_COURSES_FOR_TEACHER:'Profesor trenutno nema kurseva',
+	ERR_NO_COURSES_FOR_TEACHER: 'Profesor trenutno nema kurseva',
 	ERR_NO_UNMARKED_COURSES: 'Nemate neocenjene kurseve',
 	ERR_COURSE_ALREADY_ADDED_TO_TEACHER: 'Profesoru je već dodeljen ovaj kurs',
-
-
 };
 
 export const SUCCESS_CODES = {
+	LOGGED: 'Uspešno ste se ulogovali.',
 	COURSE_CREATED: 'Novi kurs je uspešno kreiran',
 	COURSE_UPDATED: 'Kurs je uspešno izmenjen',
 	COURSE_DELETED: 'Kurs je uspešno obrisan',

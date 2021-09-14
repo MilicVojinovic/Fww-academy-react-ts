@@ -1,15 +1,40 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./views/login/Login";
+import React, { useContext, useEffect, useReducer } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import Loader from "./common/components/Loader";
+import ProtectedRoute from "./common/components/ProtectedRoute";
+import SideMenu from "./common/components/SideMenu";
+import ContextProvider, { GlobalContext } from "./context/ContextProvider";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
+import TeacherHome from "./pages/teacher/TeacherHome";
 
 export default function App() {
-    return <div className="h-screen w-screen">
+  return (
+    <ContextProvider>
+      <div className="h-screen w-screen flex">
         <Router>
-            <Switch>
-                <Route exact path="/">
-                    <Login />
-                </Route>
-            </Switch>
+          <SideMenu></SideMenu>
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            <Route exact path="/teacher-home">
+              <ProtectedRoute component={TeacherHome}></ProtectedRoute>
+            </Route>
+            <Route exact path="/*">
+              <Redirect to="/login"></Redirect>
+            </Route>
+          </Switch>
         </Router>
-    </div>;
+      </div>
+    </ContextProvider>
+  );
 }

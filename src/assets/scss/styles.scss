@@ -1,30 +1,30 @@
 // css globals and resets
 * {
-	font-family: 'Arial', serif;
-	font-weight: normal;
+  font-family: "Arial", serif;
+  font-weight: normal;
   //   color:
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	line-height: 1;
-	font-style: normal;
-	text-decoration: none;
-	list-style-type: none;
-	outline: 0 none transparent;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	&:focus {
-	  outline: 0 none transparent;
-	}
-	&::-moz-focus-inner {
-	border: 0;
-	}
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-style: normal;
+  text-decoration: none;
+  list-style-type: none;
+  outline: 0 none transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  &:focus {
+    outline: 0 none transparent;
   }
-  
-  u {
-	  text-decoration: underline;
+  &::-moz-focus-inner {
+    border: 0;
   }
+}
+
+u {
+  text-decoration: underline;
+}
 
 // .rotateIn {
 //     animation: rotateInFrames 6s infinite;
@@ -57,4 +57,140 @@
 //     }
 // }
 
+.loader {
+  animation: opacity 0.2s linear;
+}
 
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animation {
+  animation: pulse 2s linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.message {
+  position: absolute;
+  bottom: 20px;
+  right: -320px;
+  width: 320px;
+  height: 128px;
+
+  animation: animation 4s linear;
+
+  &::before,
+  &::after {
+    background-color: rgb(92, 92, 221);
+    width: 0px;
+    height: 6px;
+    position: absolute;
+    content: "";
+    animation: pseudo-elem-animation 4s linear;
+  }
+
+  &::before {
+    bottom: 2px;
+    left: 10px;
+  }
+
+  &::after {
+    bottom: 2px;
+    right: 10px;
+  }
+}
+
+@keyframes animation {
+  0% {
+    transform: translateX(0px) scale(1, 1);
+  }
+
+  20% {
+    transform: translateX(-200px) scale(1, 1);
+  }
+
+  40% {
+    transform: translateX(-400px) scale(1, 1);
+  }
+
+  70% {
+    transform: translateX(-400px) scale(1, 1);
+  }
+
+  85% {
+    transform: translateX(-400px) scale(0.5, 0.5);
+  }
+
+  100% {
+    transform: translateX(-400px) scale(0, 0);
+  }
+}
+
+@keyframes pseudo-elem-animation {
+  0% {
+    width: 0px;
+  }
+
+  40% {
+    width: 0px;
+  }
+
+  70% {
+    width: 150px;
+  }
+
+  100% {
+    width: 150px;
+  }
+}
+
+.message:hover,
+.message:hover::before,
+.message:hover::after {
+  -webkit-animation-play-state: paused;
+}
+
+.scroll-y {
+    overflow: scroll !important;
+    overflow-x: hidden;
+}
+
+.overflow-hidden {
+    overflow: hidden !important;
+}
+
+div::-webkit-scrollbar {
+    display: none;
+}
+
+.sideMenu-open {
+    max-width: 1000px;
+    transition: 0.8s ease-in-out;
+}
+
+.sideMenu-close {
+    max-width: 0px;
+    transition: 0.8s ease-in-out;
+}
