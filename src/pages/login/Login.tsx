@@ -1,5 +1,3 @@
-import { useContext, useReducer } from "react";
-import { GlobalContext } from "../../context/ContextProvider";
 import LoginForm from "./components/LoginForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,8 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
-  const { stateAuth, dispatchAuth, stateCommon, dispatchCommon } =
-    useContext(GlobalContext);
 
   return (
     <div className="login bg-blue-200 w-full h-full flex flex-col items-center justify-center">

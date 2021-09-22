@@ -1,13 +1,59 @@
-import React, { FC, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { FC, useContext, useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router";
 import { TOKEN_LS_NAME } from "../../constants/constants";
 import { GlobalContext } from "../../context/ContextProvider";
 import { authTypes } from "../../types";
 
+const menuListTeacher = [
+  {
+    link: "/teacher-home",
+    title: "Početna",
+    icon: "fas fa-home",
+  },
+  {
+    link: "/teacher-courses",
+    title: "Lista Vaših kurseva",
+    icon: "fas fa-list",
+  },
+  {
+    link: "/students",
+    title: "Studenti",
+    icon: "fas fa-user-graduate",
+  },
+  {
+    link: "/request-course",
+    title: "Zahtevi za pohadjanje kursa",
+    icon: "fa fa-reply-all",
+  },
+];
+
+const menuListStudent = [
+  {
+    link: "/student-home",
+    title: "Početna",
+    icon: "fas fa-home",
+  },
+  {
+    link: "/finished-courses",
+    title: "Završeni kursevi",
+    icon: "fas fa-check",
+  },
+  {
+    link: "/current-courses",
+    title: "Kursevi koje trenutno pohadjate",
+    icon: "fas fa-question",
+  },
+  {
+    link: "/all-courses",
+    title: "Spisak kurseva koje niste pohadjali",
+    icon: "fas fa-list",
+  },
+];
+
 const SideMenu: FC = () => {
   const history = useHistory();
-  const { stateAuth, dispatchAuth, stateCommon, dispatchCommon } =
-    useContext(GlobalContext);
+  const location = useLocation();
+  const { stateAuth, dispatchAuth } = useContext(GlobalContext);
 
   const [menuList, setMenuList] = useState<
     | {
@@ -29,66 +75,18 @@ const SideMenu: FC = () => {
     history.push("/login");
   }
 
-  const menuListTeacher = [
-    {
-      link: "/teacher-home",
-      title: "Početna",
-      icon: "fas fa-home",
-    },
-    {
-      link: "/courses",
-      title: "Lista Vaših kurseva",
-      icon: "fas fa-list",
-    },
-    {
-      link: "/students",
-      title: "Studenti",
-      icon: "fas fa-user-graduate",
-    },
-    {
-      link: "/request-course",
-      title: "Zahtevi za pohadjanje kursa",
-      icon: "fa fa-reply-all",
-    },
-  ];
-
-  const menuListStudent = [
-    {
-      link: "/student-home",
-      title: "Početna",
-      icon: "fas fa-home",
-    },
-    {
-      link: "/finished-courses",
-      title: "Završeni kursevi",
-      icon: "fas fa-check",
-    },
-    {
-      link: "/current-courses",
-      title: "Kursevi koje trenutno pohadjate",
-      icon: "fas fa-question",
-    },
-    {
-      link: "/all-courses",
-      title: "Spisak kurseva koje niste pohadjali",
-      icon: "fas fa-list",
-    },
-  ];
-
   useEffect(() => {
-    stateAuth.role === "teacher"
+    stateAuth.user.role === "teacher"
       ? setMenuList(menuListTeacher)
       : setMenuList(menuListStudent);
-  }, [stateAuth]);
+  }, [stateAuth, setMenuList]);
 
-
-  if (history.location.pathname === '/login' || history.location.pathname === '/register') {
-	  return null
+  if (location.pathname === "/login" || location.pathname === "/register") {
+    return null;
   }
 
   return (
     <div>
-		
       <div className="flex flex-col h-full bg-blue-300 ">
         <div className="logout flex justify-center pt-6">
           <i
@@ -101,7 +99,18 @@ const SideMenu: FC = () => {
         <div className="menu  pt-6 flex-col flex-grow">
           {menuList?.map((menu) => {
             return (
-              <div className="py-3 px-6 flex items-center rounded-xl hover:bg-blue-500 cursor-pointer border border-gray-500 m-2">
+              <div
+                key={menu.link}
+                className={
+                  "py-3 px-6 flex items-center rounded-xl hover:bg-blue-500  border border-gray-500 m-2 " +
+                  (location.pathname === menu.link
+                    ? "bg-blue-500"
+                    : "cursor-pointer")
+                }
+                onClick={() => {
+                  history.push(menu.link);
+                }}
+              >
                 <div className="mx-4 w-8 inline-block text-center">
                   <i className={menu.icon}></i>
                 </div>

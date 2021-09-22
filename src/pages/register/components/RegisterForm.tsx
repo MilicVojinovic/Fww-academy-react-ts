@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import Button from '../../../common/components/Button'
 import Input from '../../../common/components/Input'
@@ -27,6 +27,8 @@ function RegisterForm() {
 			password,
 			'role' : activeRadioButton
 		}
+		console.log(payload);
+		
 	}
 
 	function onChangeHandler(event: any) {
@@ -43,7 +45,6 @@ function RegisterForm() {
 		} else {
 			setActiveRadioButton('student')
 		}
-				
 	}
 
 	return (

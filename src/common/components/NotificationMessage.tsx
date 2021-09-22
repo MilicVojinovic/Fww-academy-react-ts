@@ -3,11 +3,13 @@ import { GlobalContext } from "../../context/ContextProvider";
 import { ActionTypesCommon } from "../../types/common.types";
 import { ERROR_CODES, SUCCESS_CODES } from "../../constants/messages";
 
-function NotificationMessage({}) {
-  const { stateAuth, dispatchAuth, stateCommon, dispatchCommon } =
+function NotificationMessage() {
+  const { stateCommon, dispatchCommon } =
     useContext(GlobalContext);
 
   const refNotifMessage = useRef<HTMLDivElement>(null);
+
+
 
   function messageColor(message: string) {
     if (!!message) {
@@ -56,13 +58,14 @@ function NotificationMessage({}) {
         }
       });
     }
+	let refNotifMessageCurrent = refNotifMessage.current
 
     return () => {
-      if (refNotifMessage && refNotifMessage.current) {
-        refNotifMessage.current.removeEventListener("animationend", () => {});
+      if (refNotifMessage && refNotifMessageCurrent) {
+        refNotifMessageCurrent.removeEventListener("animationend", () => {});
       }
     };
-  }, []);
+  }, [dispatchCommon]);
 
   return (
     <div className="messages w-full h-full absolute left-0 top-0 z-10 bg-opacity-75 overflow-hidden">

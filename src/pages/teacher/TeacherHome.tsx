@@ -1,11 +1,8 @@
-import React, { FC, useContext, useEffect, useState } from "react";
-import { api } from "../../api/api";
-import { LoggedUser } from "../../common/models/models";
+import  { FC, useContext } from "react";
 import { GlobalContext } from "../../context/ContextProvider";
-import { ActionTypesCommon } from "../../types/common.types";
 
 const TeacherHome: FC = (props) => {
-  const { stateAuth, dispatchAuth, stateCommon, dispatchCommon } =
+  const { stateAuth } =
     useContext(GlobalContext);
 
   return (

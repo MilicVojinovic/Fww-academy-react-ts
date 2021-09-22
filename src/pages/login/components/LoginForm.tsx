@@ -5,7 +5,6 @@ import Input from "../../../common/components/Input";
 import { GlobalContext } from "../../../context/ContextProvider";
 import { api } from "../../../api/api";
 import SHA512 from "crypto-js/sha512";
-import { ActionTypesCommon } from "../../../types/common.types";
 import { TOKEN_LS_NAME } from "../../../constants/constants";
 import { ActionTypesAuth } from "../../../types/auth.types";
 import { LoggedUser } from "../../../common/models/models";
@@ -13,7 +12,7 @@ import { LoggedUser } from "../../../common/models/models";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { stateAuth, dispatchAuth, stateCommon, dispatchCommon } =
+  const { dispatchAuth, changeLoaderState, changeNotifMessageState } =
     useContext(GlobalContext);
 
   const history = useHistory();
@@ -24,20 +23,6 @@ export default function LoginForm() {
 
   function passwordHandler(val: any) {
     setPassword(val.value);
-  }
-
-  function loaderState(state: boolean) {
-    dispatchCommon({
-      payload: state,
-      type: ActionTypesCommon.LOADER,
-    });
-  }
-
-  function notifMessageState(state: { status: any; message: string }) {
-    dispatchCommon({
-      payload: state,
-      type: ActionTypesCommon.NOTIFICATION_MESSAGE,
-    });
   }
 
   function saveUser(user: LoggedUser) {
@@ -53,21 +38,17 @@ export default function LoginForm() {
       password: SHA512(password).toString(),
     };
 
-    loaderState(true);
+    changeLoaderState(true);
 
     try {
       const user = await api.post("/login", payload);
-	  history.push("/teacher-home");
-	  localStorage.setItem(TOKEN_LS_NAME, user.data['session-id']);
-	  saveUser(user.data);
-      loaderState(false);
-    //   notifMessageState({
-    //     status: user,
-    //     message: "LOGGED",
-    //   });
+      history.push("/teacher-home");
+      localStorage.setItem(TOKEN_LS_NAME, user.data["session-id"]);
+      saveUser(user.data);
+      changeLoaderState(false);
     } catch (error) {
-      loaderState(false);
-      notifMessageState({
+      changeLoaderState(false);
+      changeNotifMessageState({
         status: error,
         message: "",
       });
