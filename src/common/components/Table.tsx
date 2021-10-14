@@ -1,7 +1,7 @@
 import  { FC } from "react";
 
 interface TablePropsInterface {
-  tableHead: string[];
+  tableHead: (string | null)[];
   tableData: any[];
   tableDataFields: any[];
   slotProp?: any;
@@ -24,7 +24,6 @@ const Table: FC<TablePropsInterface> = ({
   onDelete,
   children,
 }) => {
-  
 
   return (
     <div className="flex flex-col">
@@ -69,7 +68,7 @@ const Table: FC<TablePropsInterface> = ({
                 {tableData.map((row) => {
                   return (
                     <tr
-                      key={row.id}
+                      key={row.id || row.user_id}
                       className="rowClass"
                       onClick={() => {
                         onRowClick(row);

@@ -11,6 +11,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import TeacherCoursesList from "./pages/teacher/TeacherCoursesList";
 import TeacherHome from "./pages/teacher/TeacherHome";
+import TeacherStudentList from "./pages/teacher/TeacherStudentList";
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
             </Route>
 			<Route exact path="/teacher-courses">
               <ProtectedRoute component={TeacherCoursesList}></ProtectedRoute>
+            </Route>
+			<Route exact path="/students">
+              <ProtectedRoute component={TeacherStudentList}></ProtectedRoute>
             </Route>
             <Route exact path="/*">
               <Redirect to="/login"></Redirect>

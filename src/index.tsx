@@ -5,13 +5,16 @@ import App from './App';
 import './index.scss';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 library.add(fas)
 
 ReactDOM.render(
-  <React.StrictMode>
+//   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+//   </React.StrictMode>,
+,
   document.getElementById('root')
 );
 
