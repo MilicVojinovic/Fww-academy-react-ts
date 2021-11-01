@@ -1,14 +1,13 @@
 import { FC, useCallback, useContext, useEffect, useState } from "react";
 import Select from "react-select";
-import { api } from "../../api/api";
 import Scroll from "../../common/components/Scroll";
 import Table from "../../common/components/Table";
 import { GlobalContext } from "../../context/ContextProvider";
 import { teacherTypes } from "../../types";
 import DatePicker from "react-datepicker";
 import { DateTime } from "luxon";
-import queryString from "query-string";
-import useFetchHook from "../../hooks/useFetchHook";
+import fetchData from "../../services/fetchData";
+import { api } from "../../api/api";
 
 const completedOptions = [
   {
@@ -72,48 +71,57 @@ const TeacherStudentList: FC = () => {
     }));
   }, []);
 
-  const getStudents = useCallback(
-    async (filters) => {
+
+  // on mount
+  useEffect(() => {
+    let fetchDataOnMount = async () => {
       changeLoaderState(true);
       try {
-        const query = queryString.stringify(filters, { skipNull: true });
-        const user = await api.get(`/students?` + query);
-
+        const res = await api.get(`/teacher/${stateAuth.user.id}/courses`);
         dispatchTeacher({
-          type: teacherTypes.ActionTypesTeacher.SET_TEACHER_STUDENTS,
-          payload: user.data,
+          type: teacherTypes.ActionTypesTeacher.SET_TEACHER_COURSES,
+          payload: res.data,
         });
         changeLoaderState(false);
+        return res;
       } catch (error) {
         changeLoaderState(false);
         changeNotifMessageState({
           status: error,
           message: "",
         });
+        return error;
       }
-    },
-    [dispatchTeacher, changeLoaderState, changeNotifMessageState]
-  );
-
-  // fetch teachers courses
-  useFetchHook(
-    `/teacher/${stateAuth.user.id}/courses`,
+    };
+    fetchDataOnMount()
+      .then((res: any) => {
+        setFiltersManualy("course_id", res.data[0].id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [
+    changeLoaderState,
+    changeNotifMessageState,
     dispatchTeacher,
-    teacherTypes.ActionTypesTeacher.SET_TEACHER_COURSES
-  );
-
-  useEffect(() => {
-    if (!filters.course_id && stateTeacher.teacherCourses.length > 0) {
-      setFiltersManualy("course_id", stateTeacher.teacherCourses[0].id);
-    }
-  }, [stateTeacher.teacherCourses, filters, setFiltersManualy]);
+    stateAuth,
+    setFiltersManualy,
+  ]);
 
   // useFiltersChangeHook
   useEffect(() => {
+	//   useEffect runs on every mount, ask if (filters.course_id) to prevent fetchData to execute without course_id
     if (filters.course_id) {
-      getStudents(filters);
+      fetchData(
+        filters,
+        changeLoaderState,
+        dispatchTeacher,
+        teacherTypes.ActionTypesTeacher.SET_TEACHER_STUDENTS,
+        changeNotifMessageState,
+        `/students?`
+      );
     }
-  }, [filters, getStudents]);
+  }, [filters, changeLoaderState, dispatchTeacher, changeNotifMessageState]);
 
   return (
     <div className="teacher-student-list flex h-full  w-full flex-col bg-blue-50 p-8">

@@ -107,6 +107,7 @@ const SideMenu: FC = () => {
                     ? "bg-blue-500"
                     : "cursor-pointer")
                 }
+				data-testid={'side-menu-button:'+ menu.title}
                 onClick={() => {
                   history.push(menu.link);
                 }}

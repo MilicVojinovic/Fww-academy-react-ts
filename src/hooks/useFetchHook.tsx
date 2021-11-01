@@ -20,19 +20,23 @@ const useFetchHook = (
           payload: res.data,
         });
         changeLoaderState(false);
+        return res;
       } catch (error) {
         changeLoaderState(false);
         changeNotifMessageState({
           status: error,
           message: "",
         });
+        return error;
       }
     };
-    fetchData();
-
-    return () => {
-      console.log("unmount useFetchHook");
-    };
+    fetchData()
+      .then((res) => {
+        return Promise.resolve(res);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
   }, [
     changeLoaderState,
     changeNotifMessageState,

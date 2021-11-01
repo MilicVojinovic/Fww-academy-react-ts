@@ -183,7 +183,8 @@ const TeacherCoursesList: FC = () => {
             <Select
               options={stateTeacher.teacherCourses}
               className="w-64 ml-2"
-              placeholder=""
+			  placeholder=""
+			  id="select-course"
               isClearable={true}
               value={course}
               getOptionLabel={(option: any) => {
@@ -198,6 +199,7 @@ const TeacherCoursesList: FC = () => {
             <Select
               options={allTeachers}
               className="w-64 ml-2"
+			  id="select-teacher"
               placeholder=""
               isClearable={true}
               value={teacher}
